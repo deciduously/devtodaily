@@ -17,7 +17,7 @@ intoDigits n = intoDigits (div n 10) ++ [mod n 10]
 -- e.g [1,5,3] becomes 153
 fromDigits :: [Int] -> Int
 fromDigits = foldl addDigit 0
-   where addDigit num d = 10 * num + d
+    where addDigit num d = 10 * num + d
 
 -- Primary
 -- Ideally, this'd have returned a Maybe String, but spec and all
@@ -33,10 +33,12 @@ showCubes :: String -> String
 showCubes s =
     let
         maybeDigits = filter (isJust) $ map (\s -> readMaybe s :: Maybe Int) $ words s
-        splitLongerThanThrees = map fromDigits $ concat $ map (chunksOf 3) $ map intoDigits $ map fromJust $ maybeDigits
+        splitLongerThanThrees = map fromDigits $ concat $ map (chunksOf 3) $ map intoDigitsCatchingZero $ map fromJust $ maybeDigits
         justCubes = filter (/= failString) $ map isCubic splitLongerThanThrees
     in
         bool (failString) (intercalate " " justCubes) (length justCubes > 0)
+    where
+        intoDigitsCatchingZero n = if n == 0 then [0] else intoDigits n
 
 -- I added 154 because i think it was supposed to be in the input not the expected output
 test1 :: String
