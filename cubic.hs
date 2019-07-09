@@ -34,12 +34,9 @@ showCubes s =
     let
         maybeDigits = filter (isJust) $ map (\s -> readMaybe s :: Maybe Int) $ words s
         splitLongerThanThrees = map fromDigits $ concat $ map (chunksOf 3) $ map intoDigits $ map fromJust $ maybeDigits
-        justCubes = filter (/= failString) $ filterCubeStrings splitLongerThanThrees
+        justCubes = filter (/= failString) $ map isCubic splitLongerThanThrees
     in
         bool (failString) (intercalate " " justCubes) (length justCubes > 0)
-    where
-        filterCubeStrings :: [Int] -> [String]
-        filterCubeStrings ms = filter (/= failString) $ map isCubic ms
 
 -- I added 154 because i think it was supposed to be in the input not the expected output
 test1 :: String
