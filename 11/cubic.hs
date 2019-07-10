@@ -48,4 +48,4 @@ test2 :: String
 test2 = "QK29 45[&erui"
 
 test3 :: String
-test3 = "24172410 4544 153"
+test3 = "241724153033 4544"
